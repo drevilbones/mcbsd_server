@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  bds:
+    image: itzg/minecraft-bedrock-server
+    environment:
+      EULA: "TRUE"
+      GAMEMODE: survival
+      DIFFICULTY: normal
+      SERVER_NAME: "GAME NIGHT NEVER STOPS!"
+    network_mode: "host"
+    volumes:
+      - ./data:/data
+    stdin_open: true
+    tty: true
