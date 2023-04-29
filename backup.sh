@@ -1,8 +1,11 @@
 #!/bin/bash
 
+mc_comp=`pwd`
+mc_data="/opt/minecraft/data/"
+mc_backup="/big/Archives/mc_backups"
 maxbackups=30
 
-mc_send () {  echo "$1" | socat EXEC:"docker attach minecraft-bds-1",pty STDIN; }
+mc_send () {  echo "$1" | socat EXEC:"docker attach mcbds",pty STDIN; }
 
 mc_send "say §6Server going down for backups in §415 minutes!"
 sleep 5m
@@ -17,14 +20,14 @@ mc_send "stop"
 
 sleep 10
 
-cd /home/nick/minecraft/data
+cd $mc_data
 fname="mc_$(date +%s).tgz"
 tar czvf $fname worlds
-cd /home/nick/minecraft
+cd $mc_comp
 docker compose up -d
-mv data/$fname /big/Archives/mc_backups
+mv $mc_data/$fname $mc_backup
 
-cd /big/Archives/mc_backups
+cd $mc_backup
 numbackups=$(ls | wc -l)
 if [[ numbackups -gt maxbackups ]]
 then

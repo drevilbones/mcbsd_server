@@ -2,7 +2,9 @@ version: '3.4'
 
 services:
   bds:
+    container_name: mcbds
     image: itzg/minecraft-bedrock-server
+    user: 998:998
     environment:
       EULA: "TRUE"
       GAMEMODE: survival
@@ -10,7 +12,7 @@ services:
       SERVER_NAME: "GAME NIGHT NEVER STOPS!"
     network_mode: "host"
     volumes:
-      - ./data:/data
+      - /opt/minecraft/data:/data
     stdin_open: true
     tty: true
     restart: always
